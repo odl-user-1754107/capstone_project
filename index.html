@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <form id="contactForm">
+    <h1>Contact Us</h1>
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" maxlength="50" required>
+      <p id="nameError" class="error"></p>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" maxlength="100" required>
+      <p id="emailError" class="error"></p>
+    </div>
+    <div>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" placeholder="Enter your message" maxlength="500" rows="5" required></textarea>
+      <p id="messageError" class="error"></p>
+    </div>
+    <button type="submit">Send Message</button>
+    <p id="formSuccess" class="success"></p>
+  </form>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const messageError = document.getElementById('messageError');
+    const formSuccess = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form from refreshing the page
+      let hasError = false;
+
+      // Reset previous error messages
+      nameError.textContent = '';
+      emailError.textContent = '';
+      messageError.textContent = '';
+      formSuccess.textContent = '';
+
+      // Validate Name
+      if (nameInput.value.trim() === '') {
+        hasError = true;
+        nameError.textContent = 'Name is required.';
+      }
+
+      // Validate Email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailInput.value.trim() === '') {
+        hasError = true;
+        emailError.textContent = 'Email is required.';
+      } else if (!emailRegex.test(emailInput.value.trim())) {
+        hasError = true;
+        emailError.textContent = 'Please enter a valid email address.';
+      }
+
+      // Validate Message
+      if (messageInput.value.trim() === '') {
+        hasError = true;
+        messageError.textContent = 'Message is required.';
+      }
+
+      // If no validation errors, show success message
+      if (!hasError) {
+        formSuccess.textContent = 'Your message has been sent!';
+        form.reset(); // Clear form fields
+      }
+    });
+  </script>
+</body>
+</html>
