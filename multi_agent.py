@@ -71,13 +71,11 @@ class ApprovalTerminationStrategy(TerminationStrategy):
         """Execute the push_to_github.sh script"""
         try:
             # Make sure the script is executable
-            subprocess.run(
+            result = subprocess.run(
                 ["C:\\Program Files\\Git\\bin\\bash.exe", "push_to_github.sh"],
                 check=True
             )
 
-            #result = subprocess.run(['bash', './push_to_github.sh'], check=True, capture_output=True, text=True)
-            
             logging.warning("Successfully pushed to GitHub:")
             logging.warning(result.stdout)
             
